@@ -1,0 +1,55 @@
+[±è¼ö°æ] [¿ÀÈÄ 1:16] void easy3()
+{
+	SensorData data;
+	int ir1, ir2, ir3;
+	int check = 0, check2 = 0;
+	
+	Open();
+
+	while (1) {
+		data = Sensor(1);
+		ir1 = data.IRSensor[0];
+		ir2 = data.IRSensor[1];
+		ir3 = data.IRSensor[2];
+		printf("ir1 : %d\t ir2 : %d\t CDS : %d\n", ir1, ir2, data.CDSSensor);
+
+		if (data.CDSSensor > 150)
+		{
+			Steering(2);
+			Go(305, 300);
+			check = 1;
+		}
+
+		if (check2 != 2 && (ir1 > 55 || ir2 > 30))
+		{
+			Steering(1);
+			Go(-300, -300);
+			delay(1000);
+			Steering(3);
+			Go(300, 300);
+			delay(1000);
+			Steering(2);
+		}
+
+		if (check == 1 && check2 != 2 && data.CDSSensor < 150) {
+			Go(0, 0);
+			DisplayLine(0xff, 0x01, 0x01, 0xff, 0x81, 0xff, 0x81, 0x00);
+			delay(2000);
+			Display(0);
+			Go(300, 300);
+			check2 = 2;
+		}
+
+		if (check2 == 2 && ir2 > 30) {
+			Go(0, 0);
+			DisplayLine(0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
+			Sound(49);
+			delay(1000);
+			Display(0);
+			Sound(0);
+			break;
+		}
+	}
+
+	Close();
+}
