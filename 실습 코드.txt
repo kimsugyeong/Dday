@@ -1,4 +1,4 @@
-[±è¼ö°æ] [¿ÀÈÄ 1:16] void easy3()
+[Â±Ã¨Â¼Ã¶Â°Ã¦] [Â¿Ã€ÃˆÃ„ 1:16] void easy3()
 {
 	SensorData data;
 	int ir1, ir2, ir3;
@@ -17,7 +17,8 @@
 		{
 			Steering(2);
 			Go(305, 300);
-			check = 1;
+			check = 1;	
+			data=Sensor(0);
 		}
 
 		if (check2 != 2 && (ir1 > 55 || ir2 > 30))
@@ -29,6 +30,7 @@
 			Go(300, 300);
 			delay(1000);
 			Steering(2);
+			data=Sensor(0);
 		}
 
 		if (check == 1 && check2 != 2 && data.CDSSensor < 150) {
@@ -38,6 +40,8 @@
 			Display(0);
 			Go(300, 300);
 			check2 = 2;
+			
+			
 		}
 
 		if (check2 == 2 && ir2 > 30) {
@@ -49,6 +53,7 @@
 			Sound(0);
 			break;
 		}
+		
 	}
 
 	Close();
